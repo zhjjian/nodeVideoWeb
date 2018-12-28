@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <title>Video</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+    <botton onclick="getVideo">xsaxsaxsa</botton>
+    <div id="list"></div>>
+    <script>
+        function getVideo() {
+            console.log(111111)
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:3000/getVideo",
+                data: "",
+                dataType: "json",
+                success: function(data){
+                    console.log(data)
+                    var el = document.getElementById('list');
+
+                }
+            });
+        }
+        $(document).ready(function () {
+            $(".main  a").click(
+                function () {
+                    $(this).next().toggle();
+                }
+            );
+        });
+        function disposeData(data){
+
+
+        }
+        window.onload=getVideo();
+
+    </script>
+</body>
+</html>

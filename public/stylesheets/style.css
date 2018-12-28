@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    color: #fff;
+}
+
+a {
+  color: #ff0000;
+}
+botton{
+    background-color: red;
+}
+.main ul{
+    display: none;
+}
