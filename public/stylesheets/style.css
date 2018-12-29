@@ -1,15 +1,29 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-    color: #fff;
+
 }
 
-a {
-  color: #ff0000;
-}
+
 botton{
     background-color: red;
 }
 .main ul{
     display: none;
 }
+.dir{
+    list-style:disc;
+}
+li{
+    color: #000000;
+}
+.dir.on{
+    color: #ccc;
+    list-style:circle;
+}
+a:hover {color: #FF00FF}
+li{
+list-style:none;
+}
+
+

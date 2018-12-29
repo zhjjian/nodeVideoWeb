@@ -10,7 +10,7 @@
 </head>
 <body>
     <botton onclick="getVideo">xsaxsaxsa</botton>
-    <div id="list"></div>>
+    <div id="list"></div>
     <script>
         function getVideo() {
             console.log(111111)
@@ -22,21 +22,44 @@
                 success: function(data){
                     console.log(data)
                     var el = document.getElementById('list');
-
+                    el.innerHTML='';
+                    disposeData(data)
+                    $("#list").find("li").click(function(){
+                        $("#list li").removeClass("on");
+                        $(this).addClass("on");
+                       //$(this).next().next().toggle();
+                    });
                 }
             });
         }
-        $(document).ready(function () {
-            $(".main  a").click(
-                function () {
-                    $(this).next().toggle();
-                }
-            );
-        });
-        function disposeData(data){
 
+        function createLi(str,isDir){
+            let li = document.createElement('li');
+            if(isDir){
+                li.className = 'main dir';
+            }else{
+                li.className = 'main';
+            }
 
+            let a = document.createElement('a');
+            a.innerText = str;
+            li.appendChild(a);
+            return li;
         }
+        function disposeData(data){
+            var el = document.getElementById('list');
+            var data1 = data[data.length-1];
+            data1['children'].forEach(function(v) {
+                let li =createLi(v,true);
+                el.appendChild(li)
+            })
+            data1[data1.name].forEach(function(v) {
+                let li =createLi(v);
+                el.appendChild(li)
+            })
+}
+
+
         window.onload=getVideo();
 
     </script>
