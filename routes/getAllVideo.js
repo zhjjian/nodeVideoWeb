@@ -37,20 +37,24 @@ function fileInDir(url,arr,listArr){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    var url = 'E:\\迅雷下载';
+    console.log(req._parsedUrl.query)
+
+    //var url = 'F:\\迅雷下载';
+    var url = req._parsedUrl.query;
 
     fileIndex=0,dirIndex=0;
-    let allList=fs.readdirSync(url);
-     fileInDir(url,allList,vodeoListArr)
-    vodeoListArr.push(dirIndex)
-    vodeoListArr.push(fileIndex)
+    try{
+        let allList=fs.readdirSync(url);
+        console.log(allList)
+        fileInDir(url,allList,vodeoListArr)
+        vodeoListArr.push(dirIndex)
+        vodeoListArr.push(fileIndex)
+    }catch (e) {
+        console.log(e)
+    }
+
+
     res.send(vodeoListlist)
-
-
-
-
-
-
 });
 
 module.exports = router;

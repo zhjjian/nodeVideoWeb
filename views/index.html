@@ -9,20 +9,30 @@
 
 </head>
 <body>
-    <botton onclick="getVideo">xsaxsaxsa</botton>
+    <input id ="cheakUrl" type="text" name="fname" />
+    <button onclick="getVideo()">cheak</button>
     <div id="list"></div>
     <script>
         function getVideo() {
+           var data = document.getElementById('cheakUrl').value;
+           if(!data || data == ""){
+               alert('请输入要搜查的目录');
+               return;
+           }
             console.log(111111)
             $.ajax({
                 type: "GET",
                 url: "http://localhost:3000/getVideo",
-                data: "",
+                data: data,
                 dataType: "json",
                 success: function(data){
                     console.log(data)
                     var el = document.getElementById('list');
                     el.innerHTML='';
+                    if(data.length == 0){
+                        alert("输入的目录不存在")
+                        return;
+                    }
                     disposeData(data)
                     $("#list").find("li").click(function(){
                         $("#list li").removeClass("on");
@@ -60,7 +70,7 @@
 }
 
 
-        window.onload=getVideo();
+        //window.onload=getVideo();
 
     </script>
 </body>
