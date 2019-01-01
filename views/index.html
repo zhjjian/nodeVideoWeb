@@ -9,36 +9,67 @@
 
 </head>
 <body>
-    <input id ="cheakUrl" type="text" name="fname" />
+    <input id ="cheakUrl" type="text" autocomplete="on" name="fname"  placeholder="请输入要搜查的目录" />
     <button onclick="getVideo()">cheak</button>
     <div id="list"></div>
+    <div class="audio-wrapper">
+    <audio>
+        <source src="" type="audio/mp3">
+    </audio>
+
+    <div  class="audio-left"  >
+        <div class="left-box">
+        <div id="last"></div>
+        <div id="play"></div>
+        <div id="next"></div>
+        </div>
+    </div>
+    <div class="audio-mid">
+        <div class="mid-box">
+        <p style="max-width: 536px;">Beta-B_Kan R. Gao.mp3</p>
+
+        <div class="audio-time"><span class="audio-length-current" id="audioCurTime">00:00</span><span class="audio-length-total">/01:06</span></div>
+            <div class="progress-bar-bg" id="progressBarBg"><span id="progressDot"></span>
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+    </div>
+    </div>
+   <div class="audio-right"></div>
+</div>
+
     <script>
+            var childrenElement = [];
+            var el = document.getElementById('list');
+            var listLevel = ["one","two","three","four","five","six","seven","eight"];
+            var levelIndex = 0;
         function getVideo() {
-           var data = document.getElementById('cheakUrl').value;
-           if(!data || data == ""){
-               alert('请输入要搜查的目录');
-               return;
+           var searchData = document.getElementById('cheakUrl').value;
+            console.log("========="+searchData+"=========");
+           if(!searchData || searchData == ""){
+            searchData = "E:\\project\\nodeVideoWeb";
+
+              // alert('请输入要搜查的目录');
+              // return;
            }
-            console.log(111111)
+
             $.ajax({
                 type: "GET",
                 url: "http://localhost:3000/getVideo",
-                data: data,
+                data: searchData,
                 dataType: "json",
                 success: function(data){
                     console.log(data)
                     var el = document.getElementById('list');
+                    el.name = searchData;
                     el.innerHTML='';
                     if(data.length == 0){
                         alert("输入的目录不存在")
                         return;
                     }
-                    disposeData(data)
-                    $("#list").find("li").click(function(){
-                        $("#list li").removeClass("on");
-                        $(this).addClass("on");
-                       //$(this).next().next().toggle();
-                    });
+
+
+                    disposeData(el,data,levelIndex)
+
                 }
             });
         }
@@ -47,8 +78,11 @@
             let li = document.createElement('li');
             if(isDir){
                 li.className = 'main dir';
+
+                li.name = str;
             }else{
-                li.className = 'main';
+                li.className =  'main';
+
             }
 
             let a = document.createElement('a');
@@ -56,18 +90,83 @@
             li.appendChild(a);
             return li;
         }
-        function disposeData(data){
-            var el = document.getElementById('list');
-            var data1 = data[data.length-1];
+        function disposeData(parElement,data,level){
+            let data1;
+             data.forEach(function(item,index){
+                if(item.name == parElement.name){
+                    //深度拷贝数据，防止污染
+                    data1=JSON.parse(JSON.stringify(item));
+                    data.splice(index,1);
+                    return false;
+                }
+
+             })
+             if(!data1){
+                return
+             }
+
+
             data1['children'].forEach(function(v) {
                 let li =createLi(v,true);
-                el.appendChild(li)
+               $(li).addClass(listLevel[level]);
+               li.level=level;
+                parElement.appendChild(li)
             })
             data1[data1.name].forEach(function(v) {
                 let li =createLi(v);
-                el.appendChild(li)
+                $(li).addClass(listLevel[level]);
+               li.level=level;
+                parElement.appendChild(li)
             })
+
+
+           //添加li标签的点击事件，放在此处目的是每次添加新的内容是能把新标签添加点击事件
+                $("#list").find("li").click(function(e){
+                    //防止事件冒泡到DOM树上，也就是不触发的任何前辈元素上的事件处理函数。
+                        e.stopPropagation();
+                        $("#list li").removeClass("on");
+                        $(this).addClass("on");
+                       //隐藏同级下打开的文件
+                        $(this).siblings().find("."+listLevel[this.level+1]).css('display','none');
+                       $(this).find('.main').css('display','inherit');
+                       //$(this).next().next().toggle();
+                       if(this.className.indexOf('dir')>-1 && !this.isSearch){
+                        //添加属性，防止多次查询
+                        this.isSearch = true;
+                       if(this.level!=undefined){
+                        let l =this.level+1;
+                        disposeData(this,data,l)
+                        console.log("clicked is dir")
+                         console.log(this.name)
+                       }
+                       }
+
+                    });
+
 }
+
+
+var iframe = document.getElementsByClassName('audio-left')[0];
+if (iframe.attachEvent){
+iframe.attachEvent("onload", function(){
+window.frames['but'].document.getElementsByClassName('icon')[0].style.width=document.getElementsByClassName('audio-left')[0].scrollHeight;window.frames['but'].document.getElementsByClassName('icon')[0].style.height=document.getElementsByClassName('audio-left')[0].scrollHeight
+});
+} else {
+iframe.onload = function(){
+window.frames['but'].document.getElementsByClassName('icon')[0].style.width=document.getElementsByClassName('audio-left')[0].scrollHeight;window.frames['but'].document.getElementsByClassName('icon')[0].style.height=document.getElementsByClassName('audio-left')[0].scrollHeight
+};
+}
+// function loopChildren(elementArr,children,data){
+//     children.forEach(function(item,index){
+//         data.forEach(function(item1,index1){
+//             if(item1.name == item){
+//                 disposeData(elementArr[index],)
+//             }
+//         })
+//     })
+
+// }
+
 
 
         //window.onload=getVideo();

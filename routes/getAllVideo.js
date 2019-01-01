@@ -37,10 +37,17 @@ function fileInDir(url,arr,listArr){
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    console.log(req._parsedUrl.query)
+    
+    let str =decodeURI(req._parsedUrl.query);
+    console.log(str)
 
+    fileIndex=0; 
+    dirindex=0; 
+    vodeoListArr = []; 
+    vodeoListlist = []; 
+    level = 1; 
     //var url = 'F:\\迅雷下载';
-    var url = req._parsedUrl.query;
+    var url = str;
 
     fileIndex=0,dirIndex=0;
     try{

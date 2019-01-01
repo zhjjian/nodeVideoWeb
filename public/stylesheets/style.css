@@ -1,5 +1,7 @@
 body {
-  padding: 50px;
+  padding: 0;
+    margin: 0;
+    overflow: hidden;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 
 }
@@ -8,22 +10,182 @@ body {
 botton{
     background-color: red;
 }
-.main ul{
-    display: none;
+li{
+list-style:none;
+color: #000000;
 }
 .dir{
     list-style:disc;
 }
-li{
-    color: #000000;
-}
+
 .dir.on{
     color: #ccc;
     list-style:circle;
 }
 a:hover {color: #FF00FF}
-li{
-list-style:none;
+
+.one{ 
+	font-size: 25px;
+	margin-left: 30px;
 }
+.two{
+	font-size: 25px;
+	margin-left: 60px;
+}
+.three{
+	font-size: 25px;
+	margin-left: 90px;
+}
+.four{
+	font-size: 25px;
+	margin-left: 120px;
+}
+.five{
+	font-size: 25px;
+	margin-left: 150px;
+}
+
+
+.audio-wrapper {
+    position: absolute;
+    top:90%;
+    left: 15%;
+    background-color: rgba(15, 15, 15, 0.8);
+
+    width: 70%;
+    height: 8%;
+    border: 0;
+}
+
+.audio-left {
+    float: left;
+
+    width: 20%;
+    height: 100%;
+    border: 0px;
+    /*background-color: red;*/
+    /*里面div垂直居中*/
+    display:flex;justify-content:center;align-items:center;
+}
+.left-box{
+    display:inline-block;
+    /*background-color: black;*/
+}
+#last{
+    float: left;
+    background: url("/images/last.png") no-repeat 0 0;
+    background-size:40%;
+    background-position: 50% 50%;
+    width: 50px;
+    height: 50px;
+}
+#play{
+    float: left;
+    background: url("/images/pause.png") no-repeat 0 0;
+    background-size:50%;
+    background-position: 50% 50%;
+    width: 50px;
+    height: 50px;
+}
+#next{
+    float: left;
+    background: url("/images/next.png") no-repeat 0 0;
+    background-size:40%;
+    background-position: 50% 50%;
+    width: 50px;
+    height: 50px;
+}
+.audio-left img {
+    width: 40px;
+    position: relative;
+    top: 15px;
+    margin: 0;
+    display: initial;   /* 解除与app的样式冲突 */
+    cursor: pointer;
+}
+
+.audio-mid {
+
+    float: left;
+    width: 70%;
+    height: 100%;
+    /*里面div水平居中*/
+    display:table-cell;vertical-align:middle;text-align: center;
+
+}
+.mid-box{
+    width: 90%;
+    height: 100%;
+    display:inline-block;
+}
+.audio-mid p {
+    font-size: 15px;
+    height: 35%;
+    margin: 8px 0;
+    position: relative;
+    text-align: left;
+
+    /* 歌曲名称只显示在一行，超出部分显示为省略号 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 243px;   /* 要适配小屏幕手机，所以最大宽度先设小一点，后面js根据屏幕大小重新设置 */    
+}
+.audio-right{
+    width: 10%;
+    float: right;
+    height: 100%;
+    background-color: #FF00FF;
+    display:flex;justify-content:center;align-items:center;
+}
+.progress-bar-bg {
+    background-color: #d9d9d9;
+    position: relative;
+    height: 2px;
+    cursor: pointer;
+
+}
+.progress-bar {
+    background-color: #649fec;
+    width: 0;
+    height: 2px;
+
+
+}
+
+.progress-bar-bg span {
+    content: " ";
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    background-color: #3e87e8;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    margin-top: -5px;
+    margin-left: -5px;
+    cursor: pointer;
+}
+
+.audio-time {
+    overflow: hidden;
+    float: right;
+    margin-top: 1px;
+
+
+}
+.audio-length-current {
+
+    font-size: 12px;
+    color: rgba(255,255,255,1);
+}
+.audio-length-total {
+
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+}
+
 
 
